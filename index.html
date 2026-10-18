@@ -51982,76 +51982,79 @@ P1GnlejTSmJuKz4wCB6EisfjVdFwNM4wEw2eDc9mnP1w4Y3wRirmWehAApxA5kdyz9/A3+i/Sg/6
             track(3.6, 24, "Hips", function (p) { return [0, 0, 1.1 * S(p)]; }),
             trackPos(3.6, 24, "Hips", function (p) { return [0, 0.004 * S(p), 0]; })
           ]);
-          // Walk — 1.1 s gait cycle, FK-verified on both bundled rigs:
-          // ankle travels z +0.27 / -0.39 m (symmetric for both legs), stays
-          // within 0.09 m of its hip laterally, plants at y = 0.13 without
-          // sinking, and clears to y ~ 0.25 at mid-swing where z ~ -0.26.
-          // Thighs pitch only (Z = 0), further forward than back (asymF /
-          // asymR); the swing knee bump is narrow (pk^5) and centred just
-          // after passing (left p = 0.06, right p = 0.56), with a small
-          // loading-response bump after each heel strike. Arms swing
-          // counter-phase to the same-side leg, adducted in beside the body.
-          var walk = clip("walk", 1.1, [
-            track(1.1, 24, "LeftUpLeg", function (p) { return [asymF(p, 25, 19), 0, 0]; }),
-            track(1.1, 24, "RightUpLeg", function (p) { return [asymR(p, 25, 19), 0, 0]; }),
-            track(1.1, 24, "LeftLeg", function (p) { return [4 + 42 * pk(p, 0.06, 5) + 9 * pk(p, 0.36, 3), 0, 0]; }),
-            track(1.1, 24, "RightLeg", function (p) { return [4 + 42 * pk(p, 0.56, 5) + 9 * pk(p, 0.86, 3), 0, 0]; }),
-            track(1.1, 24, "LeftFoot", function (p) { return [-5 * S(p) + 14 * pk(p, 0.66, 3) - 4 * pk(p, 0.24, 3), 0, 0]; }),
-            track(1.1, 24, "RightFoot", function (p) { return [5 * S(p) + 14 * pk(p, 0.16, 3) - 4 * pk(p, 0.74, 3), 0, 0]; }),
-            track(1.1, 24, "LeftArm", function (p) { return [17 * S(p), 0, -19 + 1.5 * S(p)]; }),
-            track(1.1, 24, "RightArm", function (p) { return [-17 * S(p), 0, 19 - 1.5 * S(p)]; }),
-            track(1.1, 24, "LeftForeArm", function (p) { return [-14 + 6 * S(p), 0, -18]; }),
-            track(1.1, 24, "RightForeArm", function (p) { return [-14 - 6 * S(p), 0, 18]; }),
-            track(1.1, 24, "Spine", function (p) { return [3 + 1.2 * S(p, 2), 4.5 * S(p), 0]; }),
-            track(1.1, 24, "Head", function (p) { return [-1.5, 2.5 * S(p), 0]; }),
-            track(1.1, 24, "Hips", function (p) { return [1.5, -4.5 * S(p), 2.2 * S(p)]; }),
-            trackPos(1.1, 24, "Hips", function (p) { return [0, -0.013 - 0.012 * Math.cos(4 * Math.PI * (p - 0.25)), 0]; })
+          // Walk — 0.92 s brisk gait cycle (~130 steps/min), re-tuned for
+          // pace and confidence after the correctness pass read as slow and
+          // tame: thigh swing 30 fwd / 22 back, knee bump 52 deg, arm swing
+          // +-24 deg with a livelier elbow, upright spine. The correctness
+          // invariants are unchanged: thighs pitch only (Z = 0, sagittal
+          // plane), the swing knee bump stays narrow (pk^5) and centred
+          // just after passing (left p = 0.06, right p = 0.56) with the
+          // small loading-response bump after each heel strike, and the
+          // arms keep their A-pose adduction in beside the body, swinging
+          // counter-phase to the same-side leg.
+          var walk = clip("walk", 0.92, [
+            track(0.92, 28, "LeftUpLeg", function (p) { return [asymF(p, 30, 22), 0, 0]; }),
+            track(0.92, 28, "RightUpLeg", function (p) { return [asymR(p, 30, 22), 0, 0]; }),
+            track(0.92, 28, "LeftLeg", function (p) { return [4 + 52 * pk(p, 0.06, 5) + 10 * pk(p, 0.36, 3), 0, 0]; }),
+            track(0.92, 28, "RightLeg", function (p) { return [4 + 52 * pk(p, 0.56, 5) + 10 * pk(p, 0.86, 3), 0, 0]; }),
+            track(0.92, 28, "LeftFoot", function (p) { return [-5 * S(p) + 14 * pk(p, 0.66, 3) - 4 * pk(p, 0.24, 3), 0, 0]; }),
+            track(0.92, 28, "RightFoot", function (p) { return [5 * S(p) + 14 * pk(p, 0.16, 3) - 4 * pk(p, 0.74, 3), 0, 0]; }),
+            track(0.92, 28, "LeftArm", function (p) { return [24 * S(p), 0, -19 + 1.5 * S(p)]; }),
+            track(0.92, 28, "RightArm", function (p) { return [-24 * S(p), 0, 19 - 1.5 * S(p)]; }),
+            track(0.92, 28, "LeftForeArm", function (p) { return [-18 + 8 * S(p), 0, -18]; }),
+            track(0.92, 28, "RightForeArm", function (p) { return [-18 - 8 * S(p), 0, 18]; }),
+            track(0.92, 28, "Spine", function (p) { return [2 + 1.2 * S(p, 2), 5 * S(p), 0]; }),
+            track(0.92, 28, "Head", function (p) { return [-1.5, 2.5 * S(p), 0]; }),
+            track(0.92, 28, "Hips", function (p) { return [1.5, -5 * S(p), 2.2 * S(p)]; }),
+            trackPos(0.92, 28, "Hips", function (p) { return [0, -0.014 - 0.014 * Math.cos(4 * Math.PI * (p - 0.25)), 0]; })
           ]);
-          // Run — 0.7 s cycle, FK-verified on both rigs: ankle z +0.45 /
-          // -0.60 m symmetric, contact at y = 0.12, and the recovery fold
-          // peaks (y ~ 0.49) UNDER the body (z ~ -0.28), not kicked out
-          // behind it — the knee bump (pk^4) is centred at p = 0.10 / 0.60,
-          // once the thigh is already swinging forward. Forward lean comes
-          // from Spine +11 / Hips +4 with the head compensating -6. Arms
-          // pump with ~88 deg elbows, adducted so the hands stay at
-          // |x| ~ 0.3 m beside the body instead of winging out at 0.47 m.
-          var run = clip("run", 0.7, [
-            track(0.7, 24, "LeftUpLeg", function (p) { return [asymF(p, 46, 32), 0, 0]; }),
-            track(0.7, 24, "RightUpLeg", function (p) { return [asymR(p, 46, 32), 0, 0]; }),
-            track(0.7, 24, "LeftLeg", function (p) { return [6 + 84 * pk(p, 0.10, 4) + 20 * pk(p, 0.40, 3), 0, 0]; }),
-            track(0.7, 24, "RightLeg", function (p) { return [6 + 84 * pk(p, 0.60, 4) + 20 * pk(p, 0.90, 3), 0, 0]; }),
-            track(0.7, 24, "LeftFoot", function (p) { return [-4 * S(p) + 22 * pk(p, 0.60, 3), 0, 0]; }),
-            track(0.7, 24, "RightFoot", function (p) { return [4 * S(p) + 22 * pk(p, 0.10, 3), 0, 0]; }),
-            track(0.7, 24, "LeftArm", function (p) { return [34 * S(p), 0, -23 + 2 * S(p)]; }),
-            track(0.7, 24, "RightArm", function (p) { return [-34 * S(p), 0, 23 - 2 * S(p)]; }),
-            track(0.7, 24, "LeftForeArm", function (p) { return [-88 + 10 * S(p), 0, -20]; }),
-            track(0.7, 24, "RightForeArm", function (p) { return [-88 - 10 * S(p), 0, 20]; }),
-            track(0.7, 24, "Spine", function (p) { return [11 + 2 * S(p, 2), 5.5 * S(p), 0]; }),
-            track(0.7, 24, "Head", function (p) { return [-6, 2.5 * S(p), 0]; }),
-            track(0.7, 24, "Hips", function (p) { return [4, -5.5 * S(p), 2.6 * S(p)]; }),
-            trackPos(0.7, 24, "Hips", function (p) { return [0, -0.024 + 0.030 * Math.sin(4 * Math.PI * p + 0.7), 0]; })
+          // Run — 0.62 s cycle (~194 steps/min), re-tuned faster and more
+          // powerful: thigh swing 56 fwd / 40 back, recovery fold 100 deg,
+          // arm pump +-42 deg with ~94 deg elbows, forward lean Spine +14 /
+          // Hips +6 with the head compensating -7, bigger vertical bounce.
+          // Invariants kept: thighs pitch only (Z = 0, no lateral splay),
+          // the knee fold (pk^4) stays centred at p = 0.10 / 0.60 — once
+          // the thigh is already swinging forward, so the fold peaks UNDER
+          // the body, not kicked out behind it — and the arms stay
+          // adducted in beside the body while they pump.
+          var run = clip("run", 0.62, [
+            track(0.62, 28, "LeftUpLeg", function (p) { return [asymF(p, 56, 40), 0, 0]; }),
+            track(0.62, 28, "RightUpLeg", function (p) { return [asymR(p, 56, 40), 0, 0]; }),
+            track(0.62, 28, "LeftLeg", function (p) { return [6 + 100 * pk(p, 0.10, 4) + 24 * pk(p, 0.40, 3), 0, 0]; }),
+            track(0.62, 28, "RightLeg", function (p) { return [6 + 100 * pk(p, 0.60, 4) + 24 * pk(p, 0.90, 3), 0, 0]; }),
+            track(0.62, 28, "LeftFoot", function (p) { return [-4 * S(p) + 26 * pk(p, 0.60, 3), 0, 0]; }),
+            track(0.62, 28, "RightFoot", function (p) { return [4 * S(p) + 26 * pk(p, 0.10, 3), 0, 0]; }),
+            track(0.62, 28, "LeftArm", function (p) { return [42 * S(p), 0, -23 + 2 * S(p)]; }),
+            track(0.62, 28, "RightArm", function (p) { return [-42 * S(p), 0, 23 - 2 * S(p)]; }),
+            track(0.62, 28, "LeftForeArm", function (p) { return [-94 + 12 * S(p), 0, -20]; }),
+            track(0.62, 28, "RightForeArm", function (p) { return [-94 - 12 * S(p), 0, 20]; }),
+            track(0.62, 28, "Spine", function (p) { return [14 + 2 * S(p, 2), 6 * S(p), 0]; }),
+            track(0.62, 28, "Head", function (p) { return [-7, 2.5 * S(p), 0]; }),
+            track(0.62, 28, "Hips", function (p) { return [6, -6 * S(p), 2.8 * S(p)]; }),
+            trackPos(0.62, 28, "Hips", function (p) { return [0, -0.028 + 0.036 * Math.sin(4 * Math.PI * p + 0.7), 0]; })
           ]);
-          // Wave — RIGHT arm only, FK-verified on both rigs. The -100 deg Z
-          // is measured against this rig's A-pose: rotating the outward-
-          // hanging bind arm by -126 deg (the previous value) put the upper
-          // arm at ~65-71 deg elevation with the hand flopping over the top
-          // of the head; -100 deg puts the upper arm at 37-48 deg above
-          // horizontal, elbow beside the head, hand just above it at
-          // |x| 0.35-0.55 m. The elbow stays bent 34-45 deg from straight,
-          // and the side-to-side flap comes from the forearm (+-11 deg) and
-          // wrist (+-10 deg): the wrist travels ~0.13 m in x while the
-          // elbow moves < 0.04 m — the upper arm does not flap.
-          var wave = clip("wave", 1.8, [
-            track(1.8, 24, "RightArm", function (p) { return [-4, 0, -100 + 1.5 * S(p, 2)]; }),
-            track(1.8, 24, "RightForeArm", function (p) { return [-9, 0, -14 + 11 * S(p, 2)]; }),
-            track(1.8, 24, "RightHand", function (p) { return [0, 0, -2 + 10 * Math.sin(4 * Math.PI * p - 0.6)]; }),
-            track(1.8, 24, "LeftArm", function (p) { return [1.5 * S(p), 0, -19]; }),
-            track(1.8, 24, "LeftForeArm", function () { return [-8, 0, -15]; }),
-            track(1.8, 24, "Head", function (p) { return [1, -4, 4 + 1.2 * S(p, 2)]; }),
-            track(1.8, 24, "Spine", function (p) { return [1, 0, 1.5 * S(p, 2)]; }),
-            track(1.8, 24, "LeftUpLeg", function () { return [0, 0, 0]; }),
-            track(1.8, 24, "RightUpLeg", function () { return [0, 0, 0]; }),
-            trackPos(1.8, 24, "Hips", function (p) { return [0, 0.003 * S(p, 2), 0]; })
+          // Wave — RIGHT arm only, re-timed from a slow 1.8 s / ~1.1 Hz
+          // sway to a cheerful 1.2 s cycle: the forearm and wrist flap at
+          // f = 3 (~2.5 flaps/s) with slightly wider amplitude (+-13 /
+          // +-12 deg). The pose geometry is unchanged from the verified
+          // fix: the -100 deg Z is measured against this rig's A-pose —
+          // rotating the outward-hanging bind arm by -126 deg (the older
+          // value) put the upper arm at ~65-71 deg elevation with the hand
+          // flopping over the top of the head; -100 deg puts the upper arm
+          // at 37-48 deg above horizontal, elbow beside the head, hand
+          // just above it. The flap still comes only from the forearm and
+          // wrist — the upper arm does not flap.
+          var wave = clip("wave", 1.2, [
+            track(1.2, 36, "RightArm", function (p) { return [-4, 0, -100 + 1.5 * S(p, 2)]; }),
+            track(1.2, 36, "RightForeArm", function (p) { return [-9, 0, -14 + 13 * S(p, 3)]; }),
+            track(1.2, 36, "RightHand", function (p) { return [0, 0, -2 + 12 * Math.sin(6 * Math.PI * p - 0.6)]; }),
+            track(1.2, 36, "LeftArm", function (p) { return [1.5 * S(p), 0, -19]; }),
+            track(1.2, 36, "LeftForeArm", function () { return [-8, 0, -15]; }),
+            track(1.2, 36, "Head", function (p) { return [1, -4, 4 + 1.2 * S(p, 2)]; }),
+            track(1.2, 36, "Spine", function (p) { return [1, 0, 1.5 * S(p, 2)]; }),
+            track(1.2, 36, "LeftUpLeg", function () { return [0, 0, 0]; }),
+            track(1.2, 36, "RightUpLeg", function () { return [0, 0, 0]; }),
+            trackPos(1.2, 36, "Hips", function (p) { return [0, 0.003 * S(p, 2), 0]; })
           ]);
           // Dance — a natural groove, not a star-jump, FK-verified on both
           // rigs: hips shift +-0.03 m sideways over the supporting foot and
